@@ -13,9 +13,21 @@ To use **Sails Persistence Stream** out of the box add the streamer to `config/m
 var sailsPersistenceStream = require('sails-persistence-stream')();
 
 module.exports.models = {
-  afterCreate: sailsPersistenceLogger.afterCreate,
-  afterUpdate: sailsPersistenceLogger.afterUpdate,
-  afterDestroy: sailsPersistenceLogger.afterDestroy
+  afterCreate: function(record, cb) {
+    sailsPersistenceStream.afterCreate(record, this).then(data => {
+      cb();
+    });
+  },
+  afterUpdate: function(record, cb) {
+    sailsPersistenceStream.afterUpdate(record, this).then(data => {
+      cb();
+    });
+  },
+  afterDestroy: function(record, cb) {
+    sailsPersistenceStream.afterDestroy(record, this).then(data => {
+      cb();
+    });
+  }
 };
 ```
 

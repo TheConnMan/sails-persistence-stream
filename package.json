@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/theconnman/sails-persistence-stream#readme",
   "dependencies": {
+    "aws-sdk": "^2.36.0",
+    "bluebird": "^3.5.0",
     "extend": "^3.0.0"
   }
 }

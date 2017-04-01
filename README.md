@@ -35,3 +35,4 @@ module.exports.models = {
 ### `require('sails-persistence-stream')(options: Object)`
 Initializes **Sails Persistence Stream** with the given options. All options are optional.
 - `options.logger`: Log4js compatible logger which **Sails Persistence Stream** will use (set to `null` for no logging)
+- `options.endpoint`: (Optional) Alternative Kinesis endpoint (for local testing use [Kinesalite](https://github.com/mhart/kinesalite))

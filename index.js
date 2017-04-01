@@ -15,7 +15,9 @@ module.exports = function(overrides) {
   AWS.config.update({
     region: options.region
   });
-  var kinesisClient = new AWS.Kinesis();
+  var kinesisClient = new AWS.Kinesis({
+    endpoint: options.endpoint
+  });
   return {
     afterCreate: function(record, me) {
       return putRecord(kinesisClient, options, 'CREATE', me, record);

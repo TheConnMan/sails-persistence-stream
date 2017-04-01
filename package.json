@@ -1,0 +1,25 @@
+{
+  "name": "sails-persistence-stream",
+  "version": "0.1.0",
+  "description": "Automatically stream all Sails model persistence events to a distributed log",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theconnman/sails-persistence-stream.git"
+  },
+  "keywords": [
+    "Sails",
+    "sails",
+    "persistence",
+    "kinesis"
+  ],
+  "author": "TheConnMan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theconnman/sails-persistence-stream/issues"
+  },
+  "homepage": "https://github.com/theconnman/sails-persistence-stream#readme",
+  "dependencies": {
+    "extend": "^3.0.0"
+  }
+}

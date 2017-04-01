@@ -2,7 +2,11 @@ var extend = require('extend');
 var Promise = require('bluebird');
 var AWS = require('aws-sdk');
 
+var log4js = require('log4js');
+var logger = log4js.getLogger('sails-persistence-stream');
+
 var defaultOptions = {
+  logger: logger,
   region: 'us-east-1'
 };
 
@@ -14,20 +18,20 @@ module.exports = function(overrides) {
   var kinesisClient = new AWS.Kinesis();
   return {
     afterCreate: function(record, me) {
-      return putRecord(kinesisClient, options.stream, 'CREATE', me, record);
+      return putRecord(kinesisClient, options, 'CREATE', me, record);
     },
 
     afterUpdate: function(record, me) {
-      return putRecord(kinesisClient, options.stream, 'UPDATE', me, record);
+      return putRecord(kinesisClient, options, 'UPDATE', me, record);
     },
 
     afterDestroy: function(records, me) {
-      return putRecord(kinesisClient, options.stream, 'DESTROY', me, record);
+      return putRecord(kinesisClient, options, 'DESTROY', me, record);
     }
   };
 };
 
-function putRecord(kinesisClient, stream, action, me, record) {
+function putRecord(kinesisClient, options, action, me, record) {
   return new Promise((resolve, reject) => {
     kinesisClient.putRecord({
       Data: new Buffer(JSON.stringify({
@@ -36,10 +40,13 @@ function putRecord(kinesisClient, stream, action, me, record) {
         record
       })),
       PartitionKey: record[me.primaryKey].toString(),
-      StreamName: stream
+      StreamName: options.stream
     }, (err, data) => {
       if (err) {
-        reject(err);
+        if (options.logger) {
+          logger.error('Error sending persistence event to Kinesis', err);
+        }
+        resolve(err);
       } else {
         resolve(data);
       }

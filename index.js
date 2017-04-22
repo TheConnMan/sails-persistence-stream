@@ -28,7 +28,9 @@ module.exports = function(overrides) {
     },
 
     afterDestroy: function(records, me) {
-      return putRecord(kinesisClient, options, 'DESTROY', me, record);
+      return Promise.all(records.map(record => {
+        return putRecord(kinesisClient, options, 'DESTROY', me, record);
+      }));
     }
   };
 };

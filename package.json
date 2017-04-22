@@ -1,6 +1,6 @@
 {
   "name": "sails-persistence-stream",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Automatically stream all Sails model persistence events to a distributed log",
   "main": "index.js",
   "repository": {
